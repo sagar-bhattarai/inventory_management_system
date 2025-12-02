@@ -24,17 +24,20 @@ const generateRefreshAndAccessToken = async (userId) => {
   }
 };
 
-const login = async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne(email);
+    // const user = await User.find({ "email": email});
+     const user = await User.findOne({ email });
+
     if (!user) {
       throw new ApiError(401, "user not found");
     }
 
-    const isMatch = await user.isPasswordCorrect(password);
-    if (!isMatch) {
+    const isValidPassword = await user.isPasswordCorrect(password);
+
+    if (!isValidPassword) {
       throw new ApiError(401, "invalid credentials");
     }
 
@@ -43,7 +46,7 @@ const login = async (req, res) => {
     );
 
     const loggedInUser = await User.findById(user._id).select(
-      "-password, refreshToken"
+      "-password refreshToken"
     );
 
     return res
@@ -62,8 +65,8 @@ const login = async (req, res) => {
         )
       );
   } catch (error) {
-    throw new ApiError(500, "internal server error");
+    throw new ApiError(500, "internal server error", error);
   }
 };
 
-export { login };
+export { loginUser };

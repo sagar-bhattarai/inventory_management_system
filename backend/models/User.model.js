@@ -37,6 +37,8 @@ const userSchema = new Schema(
   }
 );
 
+
+
 // pre is middleware of mongoose
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -44,6 +46,7 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next(); // comment this to seed user admin
 });
+
 
 // custom methods
 userSchema.methods.isPasswordCorrect = async function (password) {
