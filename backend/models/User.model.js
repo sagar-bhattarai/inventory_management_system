@@ -30,6 +30,7 @@ const userSchema = new Schema(
     },
     refreshToken: {
       type: String,
+      default: "",
     },
   },
   {
@@ -39,13 +40,20 @@ const userSchema = new Schema(
 
 
 
-// pre is middleware of mongoose
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+// //  pre is middleware of mongoose
+// userSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) return next();
+
+//   this.password = await bcrypt.hash(this.password, 10);
+//   next(); // comment this to seed user admin
+// });
+
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 10);
-  next(); // comment this to seed user admin
 });
+
 
 
 // custom methods

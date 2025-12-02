@@ -11,14 +11,16 @@ const options = {
 const generateRefreshAndAccessToken = async (userId) => {
   try {
     const user = await User.findById(userId);
-    const refreshToken = user.generateRefreshToken();
-    const accessToken = user.generateAccessToken();
+    
+    const refreshToken = await user.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
 
     user.refreshToken = refreshToken;
 
     await user.save({ validateBeforeSave: false });
-
+    
     return { refreshToken, accessToken };
+
   } catch (error) {
     throw new ApiError(500, "Error while generating tokens", error);
   }
@@ -29,7 +31,7 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // const user = await User.find({ "email": email});
-     const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) {
       throw new ApiError(401, "user not found");
@@ -46,7 +48,7 @@ const loginUser = async (req, res) => {
     );
 
     const loggedInUser = await User.findById(user._id).select(
-      "-password refreshToken"
+      "-password -refreshToken"
     );
 
     return res
