@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 import "./App.css";
+import Root from "./components/Root";
+import Login from "./pages/login.jsx";
 
 function App() {
   return (
-    <div className="text-3xl font-bold underline"> frontend</div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Root/>} />
+        <Route path="/admin/dashboard" element={<h1>admin dashboard</h1>} />
+        <Route path="/customer/dashboard" element={<h1>customer dashboard</h1>} />  
+        <Route path="/login" element={<Login/>} />
+      </Routes>
+    </Router>
   );
 }
 

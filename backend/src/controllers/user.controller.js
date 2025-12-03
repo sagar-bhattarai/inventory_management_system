@@ -27,6 +27,20 @@ const generateRefreshAndAccessToken = async (userId) => {
   }
 };
 
+const guestUser = async (req, res) =>{
+      return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {
+            api: config.api,
+          },
+          "you are a guest user.!!"
+        )
+      );
+}
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -73,4 +87,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { loginUser };
+export { loginUser, guestUser };
