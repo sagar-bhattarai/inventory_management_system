@@ -1,6 +1,7 @@
 import User from "../models/User.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
+import config from "../configs/config.js";
 
 // user cannot modify cookie in the frontend after using this options
 const options = {
@@ -30,7 +31,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // const user = await User.find({ "email": email});
+    // const user = await User.findOne({$or: [{ email }, { name }], });
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -59,6 +60,7 @@ const loginUser = async (req, res) => {
         new ApiResponse(
           200,
           {
+            api: config.api,
             user: loggedInUser,
             refreshToken,
             accessToken,
