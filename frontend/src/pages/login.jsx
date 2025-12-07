@@ -26,8 +26,7 @@ const Login = () => {
         }
       );
       // console.log("response", response);
-      // if (response.data.statusCode === 200 && response.data.statusText === "OK") {
-      if (response.data.statusCode === 200) {
+      if (response.data.statusCode === 200 && response.data.success) {
         await login(response.data.data.user, response.data.data.accessToken);
         if (response.data.data.user.role == "admin") {
           navigate("/admin/dashboard");
@@ -35,23 +34,25 @@ const Login = () => {
           navigate("/customer/dashboard");
         }
       } else {
-        alert(response.data.error);
+        alert(response.data?.error);
       }
     } catch (error) {
-      setError(error.message);
-      console.log(error);
+      if(error.response){
+        setError(error.response?.data?.errors);
+      }
+      // console.log("error",error.response);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-container flex flex-col justify-center bg-[#f3f3f3] items-center w-full h-[100vh]">
-      <h1 className="font-bold text-lg mb-5">login</h1>
-      {error && (
-        <div className="bg-red-200 py-2 px-4 mb-4 rounded">{error}</div>
-      )}
-      <div className="form-container p-5 rounded border border-gray-50  shadow-lg shadow-black-500/50">
+    <div className="login-container flex flex-col justify-center items-center bg-[#f3f3f3] w-full h-[100vh]">
+      <h1 className="font-bold text-md mb-5 text-green-600">
+        Inventory management system
+      </h1>
+      <div className="form-container flex flex-col justify-center items-center p-5 rounded border border-gray-50  shadow-lg shadow-black-500/50">
+        <h3 className="font-bold text-sm mb-5">login</h3>
         <form
           onSubmit={handleSubmit}
           className="login-form flex flex-col justify-center items-center"
@@ -88,6 +89,9 @@ const Login = () => {
           </button>
         </form>
       </div>
+      {error && (
+        <div className="bg-red-200 py-2 px-4 my-4 rounded">{error}</div>
+      )}
     </div>
   );
 };

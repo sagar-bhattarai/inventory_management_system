@@ -12,34 +12,31 @@ const options = {
 const generateRefreshAndAccessToken = async (userId) => {
   try {
     const user = await User.findById(userId);
-    
+
     const refreshToken = await user.generateRefreshToken();
     const accessToken = await user.generateAccessToken();
 
     user.refreshToken = refreshToken;
 
     await user.save({ validateBeforeSave: false });
-    
-    return { refreshToken, accessToken };
 
+    return { refreshToken, accessToken };
   } catch (error) {
     throw new ApiError(500, "Error while generating tokens", error);
   }
 };
 
-const guestUser = async (req, res) =>{
-      return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          {
-            api: config.api,
-          },
-          "you are a guest user.!!"
-        )
-      );
-}
+const guestUser = async (req, res) => {
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        api: config.api,
+      },
+      "you are a guest user.!!"
+    )
+  );
+};
 
 const loginUser = async (req, res) => {
   try {
@@ -49,13 +46,27 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new ApiError(401, "user not found");
+      // throw new ApiError(401, "user not found");
+      return res.status(401).json(
+        new ApiError(
+          401,
+          {},
+          "user not found"
+        )
+      );
     }
 
     const isValidPassword = await user.isPasswordCorrect(password);
 
     if (!isValidPassword) {
-      throw new ApiError(401, "invalid credentials");
+      // throw new ApiError(401, "invalid credentials");
+      return res.status(401).json(
+        new ApiError(
+          401,
+          {},
+          "invalid credentials"
+        )
+      );
     }
 
     const { refreshToken, accessToken } = await generateRefreshAndAccessToken(
