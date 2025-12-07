@@ -29,7 +29,7 @@ const Login = () => {
       if (response.data.statusCode === 200 && response.data.success) {
         await login(response.data.data.user, response.data.data.accessToken, response.data.data.refreshToken);
         if (response.data.data.user.role == "admin") {
-          navigate("/admin/dashboard");
+          navigate("/admin-dashboard");
         } else {
           navigate("/customer/dashboard");
         }
