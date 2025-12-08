@@ -4,16 +4,17 @@ import Root from "./utils/Root.jsx";
 import Login from "./pages/login.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Categories from "./components/Categories.jsx";
 
 function App() {
   const sidebarItems = [
-    { name: "categories" },
-    { name: "products" },
-    { name: "suppliers" },
-    { name: "orders" },
-    { name: "users" },
-    { name: "profile" },
-    { name: "logout" },
+    { name: "categories", element: <Categories /> },
+    { name: "products", element: <Categories /> },
+    { name: "suppliers", element: <Categories /> },
+    { name: "orders", element: <Categories /> },
+    { name: "users", element: <Categories /> },
+    { name: "profile", element: <Categories /> },
+    { name: "logout", element: <Categories /> },
   ];
 
   return (
@@ -30,13 +31,8 @@ function App() {
         >
           <Route index element={<h1>Summary of Dashboard</h1>} />
           {sidebarItems.map((items) => (
-              <Route
-                key={items.name}
-                path={items.name}
-                element={<h1 className="capitalize">{items.name}</h1>}
-              />
-            )
-          )}
+            <Route key={items.name} path={items.name} element={items.element} />
+          ))}
         </Route>
         <Route
           path="/customer/dashboard"
