@@ -1,29 +1,29 @@
 import CategoryModel from "../models/Category.model.js";
 
 const findCategoryOnDb = async (catIdOrName, searchType) => {
+  // console.log("catIdOrName", catIdOrName, searchType);
   if (searchType === "name") {
-    return await CategoryModel.findOne({ catIdOrName });
+    return await CategoryModel.findOne({ categoryName: catIdOrName });
   } else {
-    return await CategoryModel.findById({ catIdOrName });
+    return await CategoryModel.findById(catIdOrName);
   }
 };
 
 const add = async (req) => {
   const existingCategory = await findCategoryOnDb(req.categoryName, "name");
-
-  console.log("existingCategory", existingCategory);
-
   if (existingCategory) {
     throw {
-      status: 400,
+      status: 409,
       message: "category already exists",
     };
   }
 
-  return await CategoryModel.create({
+  const newCategory = new CategoryModel({
     categoryName: req.categoryName,
-    categoryDescrition: req.categoryDescrition,
+    categoryDescription: req.categoryDescription,
   });
+
+  return await newCategory.save();
 };
 
 export default { add };

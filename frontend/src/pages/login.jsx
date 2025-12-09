@@ -27,11 +27,12 @@ const Login = () => {
       );
       // console.log("response", response);
       if (response.data.statusCode === 200 && response.data.success) {
-        await login(response.data.data.user, response.data.data.accessToken, response.data.data.refreshToken);
-        if (response.data.data.user.role == "admin") {
+        const data = response.data.data;
+        await login(data.user, data.accessToken, data.refreshToken);
+        if (data.user.role == "admin") {
           navigate("/admin-dashboard");
         } else {
-          navigate("/customer/dashboard");
+          navigate("/customer-dashboard");
         }
       } else {
         alert(response.data?.error);

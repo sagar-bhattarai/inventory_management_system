@@ -1,9 +1,10 @@
 import express from "express";
+import authMiddleWare from "../middlewares/authMiddleware.js"
 import {addCategory, getCategoryById, getCategories, updateCategory, deleteCategory} from "../controllers/category.controller.js";
 
 const router = express.Router();
 
-router.post("/add", addCategory);
+router.post("/add", authMiddleWare, addCategory);
 router.get("/all-categories", getCategories);
 router.put("/update", updateCategory);
 router.delete("/delete", deleteCategory);

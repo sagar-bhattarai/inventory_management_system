@@ -35,7 +35,7 @@ function App() {
           ))}
         </Route>
         <Route
-          path="/customer/dashboard"
+          path="/customer-dashboard"
           element={<h1>customer dashboard</h1>}
         />
         <Route path="/login" element={<Login />} />

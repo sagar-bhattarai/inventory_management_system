@@ -12,7 +12,7 @@ const categorySchema = new mongoose.Schema(
     },
     categoryDescription: {
       type: String,
-      required: [true, "name is required"],
+      required: [true, "description is required"],
       trim: true
     },
   },
