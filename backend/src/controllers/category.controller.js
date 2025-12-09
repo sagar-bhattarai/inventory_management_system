@@ -5,14 +5,9 @@ import config from "../configs/config.js";
 
 const addCategory = async (req, res) => {
   try {
-    const { categoryName, categoryDescription } = req.body;
-    const catAdded = categoryService.add(categoryName, categoryDescription);
+    const catAdded = await categoryService.add(req);
 
-    if (!catAdded) {
-      return res
-        .status(400)
-        .json(new ApiError(500, {catAdded}, "could not add category"));
-    }
+    console.log("catadded", catAdded)
 
     return res.status(200).json(
       new ApiResponse(
@@ -26,8 +21,8 @@ const addCategory = async (req, res) => {
     );
   } catch (error) {
     return res
-      .status(500)
-      .json(new ApiError(500, {error}, "error while adding category"));
+      .status(error.status || 500)
+      .json(new ApiError(500, {error: error.message}, "error while adding category"));
   }
 };
 

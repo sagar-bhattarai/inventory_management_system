@@ -8,9 +8,22 @@ const findCategoryOnDb = async (catIdOrName, searchType) => {
   }
 };
 
-const add = async () =>{
-//   const existingCategory = findCategoryOnDb(categoryName , "name");
-}
+const add = async (req) => {
+  const existingCategory = await findCategoryOnDb(req.categoryName, "name");
 
+  console.log("existingCategory", existingCategory);
 
-export default {add}
+  if (existingCategory) {
+    throw {
+      status: 400,
+      message: "category already exists",
+    };
+  }
+
+  return await CategoryModel.create({
+    categoryName: req.categoryName,
+    categoryDescrition: req.categoryDescrition,
+  });
+};
+
+export default { add };

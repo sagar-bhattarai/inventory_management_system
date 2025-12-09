@@ -9,7 +9,7 @@ const Categories = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/categories/add",
+        "http://localhost:8000/api/v1/cat/add",
         { categoryName, categoryDescription },
         {
           headers: {
