@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
-import "./App.css";
+// import "./App.css";
 import Root from "./utils/Root.jsx";
 import Login from "./pages/login.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";

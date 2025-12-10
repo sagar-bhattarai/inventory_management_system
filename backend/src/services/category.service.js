@@ -10,6 +10,12 @@ const findCategoryOnDb = async (catIdOrName, searchType) => {
 };
 
 const add = async (req) => {
+  if (req.categoryName == "" || req.categoryDescription == "") {
+    throw {
+      status: 400,
+      message: "Name and Description fields cannot be empty.",
+    };
+  }
   const existingCategory = await findCategoryOnDb(req.categoryName, "name");
   if (existingCategory) {
     throw {
