@@ -38,30 +38,29 @@ const Login = () => {
         alert(response.data?.error);
       }
     } catch (error) {
-      if(error.response){
+      if (error.response) {
         setError(error.response?.data?.errors);
+      } else {
+        setError(error.message);
       }
-      // console.log("error",error.response);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-container flex flex-col justify-center items-center bg-[#f3f3f3] w-full h-[100vh]">
-      <h1 className="font-bold text-md mb-5 text-green-600">
+    <div className="login_container h-[100vh]-">
+      <h1>
         Inventory management system
       </h1>
-      <div className="form-container flex flex-col justify-center items-center p-5 rounded border border-gray-50  shadow-lg shadow-black-500/50">
-        <h3 className="font-bold text-sm mb-5">login</h3>
+      <div className="form_container">
+        <h3>login</h3>
         <form
           onSubmit={handleSubmit}
-          className="login-form flex flex-col justify-center items-center"
         >
-          <div className="form-group pb-3 flex flex-col justify-between w-full">
+          <div className="form_group">
             <label htmlFor="email">Email</label>
             <input
-              className="rounded border py-[2px] px-3"
               type="text"
               name="email"
               id="email"
@@ -70,10 +69,9 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="form-group pb-3 flex flex-col justify-between w-full">
+          <div className="form_group">
             <label htmlFor="password">Password</label>
             <input
-              className="rounded border py-[2px] px-3"
               type="password"
               name="password"
               id="password"
@@ -83,7 +81,6 @@ const Login = () => {
             />
           </div>
           <button
-            className="rounded border border-orange-300 py-[2px] px-3 w-full cursor-pointer bg-orange-300 hover:bg-orange-500 duration-300 shadow-lg shadow-orange-300/50"
             type="submit"
           >
             {loading ? "Loading ... " : "Login"}
@@ -91,7 +88,7 @@ const Login = () => {
         </form>
       </div>
       {error && (
-        <div className="bg-red-200 py-2 px-4 my-4 rounded">{error}</div>
+        <div className="error">{error}</div>
       )}
     </div>
   );

@@ -1,0 +1,31 @@
+.login_container {
+    @apply flex flex-col justify-center items-center w-full min-h-screen bg-gray-50;
+
+    h1 {
+        @apply font-bold mb-5 text-green-600;
+    }
+
+    .form_container {
+        @apply flex flex-col justify-center items-center p-5 rounded border border-gray-50 bg-white shadow-lg;
+
+        h3 {
+            @apply font-bold text-sm mb-5;
+        }
+
+        form {
+            @apply flex flex-col justify-center items-center;
+        }
+
+        .form_group {
+            @apply pb-3 flex flex-col justify-between w-full;
+
+            input {
+                @apply rounded border py-[2px] px-3;
+            }
+        }
+
+        button {
+            @apply rounded border border-orange-300 py-[2px] px-3 w-full cursor-pointer bg-orange-300 hover:bg-orange-500 duration-300 shadow-lg shadow-orange-300/50;
+        }
+    }
+}

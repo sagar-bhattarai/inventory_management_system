@@ -20,13 +20,32 @@ const addCategory = async (req, res) => {
   } catch (error) {
     return res
       .status(error.status || 500)
-      .json(new ApiError(error.status || 500, {}, error.message ));
+      .json(new ApiError(error.status || 500, {}, error.message));
   }
 };
 
 const getCategoryById = async (req, res) => {};
 
-const getAllCategories = async (req, res) => {};
+const getAllCategories = async (req, res) => {
+  try {
+    const categories = await categoryService.allCategories(req.body);
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { api: config.api, categories },
+          "Categories fetched successfully"
+        )
+      );
+  } catch (error) {
+    return (
+      res.status(error.status || 500),
+      json(new ApiError(error.status || 500, {}, error.message))
+    );
+  }
+};
 
 const updateCategory = async (req, res) => {};
 

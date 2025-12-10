@@ -9,7 +9,14 @@
 */
 
 /* Import your SCSS files after Tailwind directives */
-@import "./login.css";
+@import "./pages_styles/login.css";
+@import "./components_styles/categories.css";
 
 
+.error {
+    @apply bg-red-500 text-gray-50 py-2 px-4 my-4 rounded;
+}
 
+.info {
+    @apply bg-green-500 text-gray-50 py-2 px-4 my-4 rounded;
+}

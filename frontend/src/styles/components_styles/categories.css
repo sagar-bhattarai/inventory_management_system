@@ -1,0 +1,59 @@
+.category {
+    @apply flex flex-col bg-gray-100;
+
+    h1 {
+       @apply text-lg font-bold;
+    }
+
+    .category_container {
+        @apply flex justify-between gap-3;
+
+        .category_left_container {
+            @apply flex flex-col bg-white rounded p-3 mt-3 shadow-lg h-min;
+
+            h2 {
+                @apply pb-2 text-sm font-bold text-center;
+            }
+
+            .category_form {
+                .input_container {
+                    @apply pb-2;
+
+                    input {
+                        @apply rounded border py-[2px] px-3 text-sm ;
+                    }
+                }
+
+                button {
+                    @apply rounded border border-orange-300 py-[2px] px-3 w-full cursor-pointer bg-orange-300 hover:bg-orange-500 duration-300 shadow-lg shadow-orange-300/50;
+                }
+            }
+        }
+
+        .category_right_container {
+            @apply flex flex-col grow bg-white rounded p-3 mt-3 shadow-lg;
+            table{
+                @apply border-collapse border border-gray-200;
+                thead{
+                    tr{
+                        @apply bg-gray-100;
+                        td{
+                            @apply border border-gray-200 p-2;
+                        }
+                    }
+                }
+                tbody{
+                    tr{
+                        td{
+                            @apply border border-gray-200 p-2;
+                            &.td_actions{
+                                @apply flex gap-2;
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

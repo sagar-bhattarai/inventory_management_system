@@ -32,4 +32,20 @@ const add = async (req) => {
   return await newCategory.save();
 };
 
-export default { add };
+const allCategories = async (req) => {
+  // const categories = await CategoryModel.find().projection({_id:0, categoryName:1, categoryDescription:1}).limit(5); // throws error
+
+  const categories = await CategoryModel.find( {}, { _id: 0, categoryName: 1, categoryDescription: 1 }).limit(5);
+  //  const categories = await CategoryModel.find().select("categoryName categoryDescription -_id").limit(5);
+
+  if (!categories) {
+    throw {
+      status: 404,
+      message: "no any categories found",
+    };
+  }
+
+  return categories;
+};
+
+export default { add, allCategories };
