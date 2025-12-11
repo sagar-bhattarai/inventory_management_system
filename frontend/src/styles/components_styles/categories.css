@@ -27,7 +27,7 @@
                 button {
                     @apply rounded border py-[2px] px-3 w-full cursor-pointer  duration-300 shadow-lg ;
                     &.add{
-                        @apply border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
+                        @apply flex justify-center items-center gap-2 border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
                     }
                 }
                 .edit_buttons{
@@ -88,6 +88,9 @@
                         @apply text-center;
                     }
                 }
+            }
+            .categories_loading{
+                 @apply flex justify-center items-center gap-2
             }
         }
     }

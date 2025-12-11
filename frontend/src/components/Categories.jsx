@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaRegTrashAlt, FaRegEdit } from "react-icons/fa";
+import { FaRegTrashAlt, FaRegEdit, FaSpinner } from "react-icons/fa";
+// import { FaSpinner, FaCircleNotch } from "react-icons/fa";
 
 const Categories = () => {
   const [categoryName, setCategoryName] = useState("");
@@ -18,7 +19,7 @@ const Categories = () => {
     },
   };
 
-  const setInformation = (msgType , msg) => {
+  const setInformation = (msgType, msg) => {
     if (msgType == "info") {
       setInfo(msg);
     } else {
@@ -27,9 +28,8 @@ const Categories = () => {
     setTimeout(() => {
       setInfo("");
       setErrorMsg("");
-
-    },2000)
-  }
+    }, 2000);
+  };
 
   const fetchAllCategories = async () => {
     setInfo("");
@@ -109,10 +109,7 @@ const Categories = () => {
   const delete_category = async (id) => {
     setLoading(true);
     try {
-      const response = await axios.delete(
-        `${url}/delete/${id}`,
-        headers
-      );
+      const response = await axios.delete(`${url}/delete/${id}`, headers);
       if (response) {
         fetchAllCategories();
         setCategoryName("");
@@ -157,7 +154,7 @@ const Categories = () => {
                     onClick={() => delete_category(category._id)}
                     className="delete"
                   >
-                    <FaRegTrashAlt /> <span>Delete</span>
+                    {loading ? <FaSpinner className="spin" /> : <> <FaRegTrashAlt /> <span>Delete</span></>}
                   </button>
                 </td>
               </tr>
@@ -167,9 +164,7 @@ const Categories = () => {
       ) : (
         <div className="info">Categories not found.</div>
       )}
-      <>
-        {loading && <span>Loading All Categories...</span>}
-      </>
+      <>{loading && <span className="categories_loading"> {loading && <FaSpinner className="spin" />} Loading All Categories...</span>}</>
     </>
   );
   return (
@@ -201,7 +196,7 @@ const Categories = () => {
             {editCategory ? (
               <div className="edit_buttons">
                 <button className="edit" type="submit">
-                  {loading ? "Updating..." : "Save"}
+                   Save {loading && <FaSpinner className="spin" />}
                 </button>
                 <button className="cancel" onClick={(e) => cancelEdit(e)}>
                   Cancel
@@ -209,7 +204,8 @@ const Categories = () => {
               </div>
             ) : (
               <button className="add" type="submit">
-                {loading ? "Adding..." : "Add Category"}
+                Add Category
+                {loading && <FaSpinner className="spin" />}
               </button>
             )}
 

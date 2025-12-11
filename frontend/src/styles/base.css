@@ -24,3 +24,16 @@
 .info {
     @apply bg-orange-500 text-orange-50 py-2 px-4 my-4 rounded text-center;
 }
+
+
+@layer utilities {
+  .spin {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
