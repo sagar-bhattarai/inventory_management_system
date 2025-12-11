@@ -1,55 +1,62 @@
 import categoryService from "../services/category.service.js";
-import ApiResponse from "../utils/ApiResponse.js";
-import ApiError from "../utils/ApiError.js";
 import config from "../configs/config.js";
 
 const addCategory = async (req, res) => {
+  console.log("req.body",req.body)
   try {
     const catAdded = await categoryService.add(req.body);
 
     return res.status(200).json(
-      new ApiResponse(
-        200,
-        {
-          api: config.api,
-          category: catAdded,
-        },
-        "category added successfully"
-      )
+      {
+        api: config.api,
+        category: catAdded,
+      },
+      "category added successfully"
     );
   } catch (error) {
     return res
       .status(error.status || 500)
-      .json(new ApiError(error.status || 500, {}, error.message));
+      .json(error.message, "server error while adding category.");
   }
 };
 
-const getCategoryById = async (req, res) => {};
+const getCategoryById = async (req, res) => { };
 
 const getAllCategories = async (req, res) => {
   try {
-    const categories = await categoryService.allCategories(req.body);
+    const categories = await categoryService.all(req.body);
 
     return res
       .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          { api: config.api, categories },
-          "Categories fetched successfully"
-        )
-      );
+      .json({ api: config.api, categories }, "Categories fetched successfully.");
   } catch (error) {
     return (
       res.status(error.status || 500),
-      json(new ApiError(error.status || 500, {}, error.message))
+      json(error.message, "server error while fetching all category.")
     );
   }
 };
 
-const updateCategory = async (req, res) => {};
+const updateCategory = async (req, res) => {
+  try {
+    const updated = await categoryService.update(req);
+    return res
+      .status(200)
+      .json(
+        { api: config.api, category: updated },
+        "Category updated successfully"
+      );
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Category name must be unique" });
+    }
+    return res
+      .status(error.status || 500)
+      .json({ message: error.message || "error while updating category" });
+  }
+};
 
-const deleteCategory = async (req, res) => {};
+const deleteCategory = async (req, res) => { };
 
 export {
   addCategory,

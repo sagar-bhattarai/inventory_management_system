@@ -2,7 +2,7 @@
     @apply flex flex-col bg-gray-100;
 
     h1 {
-       @apply text-lg font-bold;
+        @apply text-lg font-bold;
     }
 
     .category_container {
@@ -20,37 +20,72 @@
                     @apply pb-2;
 
                     input {
-                        @apply rounded border py-[2px] px-3 text-sm ;
+                        @apply rounded border py-[2px] px-3 text-sm;
                     }
                 }
 
                 button {
-                    @apply rounded border border-orange-300 py-[2px] px-3 w-full cursor-pointer bg-orange-300 hover:bg-orange-500 duration-300 shadow-lg shadow-orange-300/50;
+                    @apply rounded border py-[2px] px-3 w-full cursor-pointer  duration-300 shadow-lg ;
+                    &.add{
+                        @apply border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
+                    }
+                }
+                .edit_buttons{
+                    @apply flex justify-between gap-2;
+                    .cancel{
+                         @apply border-red-400 bg-red-400 hover:bg-red-600 shadow-red-400/50;
+                    }
+                    .edit{
+                         @apply border-yellow-300 bg-yellow-300 hover:bg-yellow-500 shadow-yellow-300/50;
+                    }
                 }
             }
         }
 
         .category_right_container {
             @apply flex flex-col grow bg-white rounded p-3 mt-3 shadow-lg;
-            table{
+
+            table {
                 @apply border-collapse border border-gray-200;
-                thead{
-                    tr{
+
+                thead {
+                    tr {
                         @apply bg-gray-100;
-                        td{
+
+                        td {
                             @apply border border-gray-200 p-2;
                         }
                     }
                 }
-                tbody{
-                    tr{
-                        td{
+
+                tbody {
+                    tr {
+                        td {
                             @apply border border-gray-200 p-2;
-                            &.td_actions{
-                                @apply flex gap-2;
-                                
+
+                            &.td_actions {
+                                @apply flex flex-row gap-2;
+
+                                button {
+                                    @apply flex flex-col justify-end items-center cursor-pointer;
+
+                                    &.edit {
+                                        @apply hover:text-yellow-600;
+                                    }
+
+                                    &.delete {
+                                        @apply hover:text-red-600;
+                                    }
+
+                                    span {
+                                        @apply text-[8px];
+                                    }
+                                }
                             }
                         }
+                    }
+                    .cat_not_found{
+                        @apply text-center;
                     }
                 }
             }

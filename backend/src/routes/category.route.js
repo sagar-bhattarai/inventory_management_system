@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post("/add", authMiddleWare, addCategory);
 router.get("/all", getAllCategories);
-router.put("/update", updateCategory);
 router.delete("/delete", deleteCategory);
+router.put("/update/:id", updateCategory);
 router.get("/:id", getCategoryById);
 
 export default router;
