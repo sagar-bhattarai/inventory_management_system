@@ -2,7 +2,6 @@ import categoryService from "../services/category.service.js";
 import config from "../configs/config.js";
 
 const addCategory = async (req, res) => {
-  console.log("req.body",req.body)
   try {
     const catAdded = await categoryService.add(req.body);
 
@@ -10,8 +9,8 @@ const addCategory = async (req, res) => {
       {
         api: config.api,
         category: catAdded,
+        message: "category added successfully"
       },
-      "category added successfully"
     );
   } catch (error) {
     return res
@@ -28,7 +27,7 @@ const getAllCategories = async (req, res) => {
 
     return res
       .status(200)
-      .json({ api: config.api, categories }, "Categories fetched successfully.");
+      .json({ api: config.api, categories, message: "Categories fetched successfully." });
   } catch (error) {
     return (
       res.status(error.status || 500),
@@ -43,8 +42,7 @@ const updateCategory = async (req, res) => {
     return res
       .status(200)
       .json(
-        { api: config.api, category: updated },
-        "Category updated successfully"
+        { api: config.api, category: updated, message: "Category updated successfully." },
       );
   } catch (error) {
     if (error.code === 11000) {
@@ -52,11 +50,24 @@ const updateCategory = async (req, res) => {
     }
     return res
       .status(error.status || 500)
-      .json({ message: error.message || "error while updating category" });
+      .json({ message: error.message || { message: "error while updating category" } });
   }
 };
 
-const deleteCategory = async (req, res) => { };
+const deleteCategory = async (req, res) => {
+  try {
+    const deleted = await categoryService.remove(req);
+    return res
+      .status(200)
+      .json(
+        { api: config.api, category: deleted, message: "Category deleted successfully" },
+      );
+  } catch (error) {
+    return res
+      .status(error.status || 500)
+      .json({ message: error.message || "error while deleting category" });
+  }
+};
 
 export {
   addCategory,

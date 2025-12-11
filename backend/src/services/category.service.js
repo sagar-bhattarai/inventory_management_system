@@ -10,8 +10,6 @@ const findCategoryOnDb = async (catIdOrName, searchType) => {
 };
 
 const add = async (req) => {
-
-  console.log(req)
   if (req.categoryName == "" || req.categoryDescription == "") {
     throw {
       status: 400,
@@ -64,4 +62,15 @@ const update = async (req) => {
   }
   return updated;
 }
-export default { add, all, update };
+
+const remove = async (req)=>{
+  const deleted = await CategoryModel.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+    throw {
+      status: 400,
+      message: "could not delete category"
+    }
+  }
+  return deleted;
+}
+export default { add, all, update, remove };

@@ -5,36 +5,47 @@ import { FaRegTrashAlt, FaRegEdit } from "react-icons/fa";
 const Categories = () => {
   const [categoryName, setCategoryName] = useState("");
   const [categoryDescription, setCategoryDescription] = useState("");
-  const [categories, setCategories] = useState("");
+  const [categories, setCategories] = useState([]);
   const [info, setInfo] = useState("");
-  const [error, setError] = useState("");
-  const [errType, setErrType] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editCategory, setEditCategory] = useState("");
 
-
-  const url = `http://localhost:8000/api/v1/categories`
+  const url = `http://localhost:8000/api/v1/categories`;
   const headers = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem(
-        "pos-accessToken"
-      )}`,
+      Authorization: `Bearer ${localStorage.getItem("pos-accessToken")}`,
     },
+  };
+
+  const setInformation = (msgType , msg) => {
+    if (msgType == "info") {
+      setInfo(msg);
+    } else {
+      setErrorMsg(msg);
+    }
+    setTimeout(() => {
+      setInfo("");
+      setErrorMsg("");
+
+    },2000)
   }
 
   const fetchAllCategories = async () => {
-    setError("");
     setInfo("");
-    setLoading(!loading);
+    setLoading(true);
+    setErrorMsg(false);
     try {
       const response = await axios.get(`${url}/all`, headers);
-      // console.log("response", response)
       if (response) {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      // console.log("error", error)
-      setError(error);
+      if (error.response.data.message) {
+        setInformation("error", error.response.data.message);
+      } else {
+        setInformation("error", error.response.statusText);
+      }
     } finally {
       setLoading(false);
     }
@@ -44,74 +55,84 @@ const Categories = () => {
     fetchAllCategories();
   }, []);
 
-  const type_err_info_loading = (
-    displayOn = "",
-    error = "",
-    info = "",
-    loading = false
-  ) => {
-    setErrType(displayOn);
-    setError(error);
-    setInfo(info);
-    setLoading(loading);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setInfo(null);
+    setLoading(true);
+    setInfo("");
+    setErrorMsg(false);
     try {
-      setLoading(!loading);
-      const response = await axios.post(
-        `${url}/add`,
-        { categoryName, categoryDescription },
-        headers
-      );
-
-      // console.log("response", response)
+      let response = null;
+      if (editCategory) {
+        response = await axios.put(
+          `${url}/update/${editCategory}`,
+          { categoryName, categoryDescription },
+          headers
+        );
+      } else {
+        response = await axios.post(
+          `${url}/add`,
+          { categoryName, categoryDescription },
+          headers
+        );
+      }
       if (response) {
-        setInfo(`${categoryName} category added successfully`);
+        setCategoryName("");
+        setCategoryDescription("");
+        setEditCategory("");
         fetchAllCategories();
+        setInformation("info", `${categoryName} ${response.data.message}`);
       }
     } catch (error) {
-      // console.log("error", error)
-      setError(error.response.data);
+      if (error.response.data.message) {
+        setInformation("error", error.response.data.message);
+      } else {
+        setInformation("error", error.response.statusText);
+      }
     } finally {
-      setCategoryName("");
-      setCategoryDescription("");
       setLoading(false);
     }
   };
 
-  const edit_category = async (category) => {
-    setEditCategory(category._id)
-    type_err_info_loading("edit", "", "", true);
-    try {
-      let categoryName = "testHGHCG";
-      let categoryDescription = "testing";
-
-      const response = await axios.put(
-        `${url}/update/${category._id}`,
-        { categoryName, categoryDescription },
-        headers
-      );
-      console.log("response", response);
-      if (response) {
-        type_err_info_loading("edit", "", response.data.message, true);
-      }
-    } catch (error) {
-      console.log("error", error);
-      type_err_info_loading("edit", error.message, "", true);
-    } finally {
-      type_err_info_loading();
-    }
+  const edit_category = (cat) => {
+    setEditCategory(cat._id);
+    setCategoryName(cat.categoryName);
+    setCategoryDescription(cat.categoryDescription);
   };
 
-  const delete_category = async (e) => { };
+  const cancelEdit = (e) => {
+    e.preventDefault();
+    setCategoryName("");
+    setCategoryDescription("");
+    setEditCategory("");
+  };
+
+  const delete_category = async (id) => {
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `${url}/delete/${id}`,
+        headers
+      );
+      if (response) {
+        fetchAllCategories();
+        setCategoryName("");
+        setCategoryDescription("");
+        setEditCategory("");
+        setInformation("info", `${categoryName} ${response.data.message}`);
+      }
+    } catch (error) {
+      if (error.response.data.message) {
+        setInformation("error", error.response.data.message);
+      } else {
+        setInformation("error", error.response.statusText);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   const categoryElement = () => (
     <>
-      {loading && <span>Loading All Categories...</span>}
-      {categories ? (
+      {categories && categories.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -121,7 +142,7 @@ const Categories = () => {
             </tr>
           </thead>
           <tbody>
-            {categories.length > 0 ? categories.map((category, index) => (
+            {categories.map((category, index) => (
               <tr key={category._id}>
                 <td>{index + 1}</td>
                 <td>{category.categoryName}</td>
@@ -140,14 +161,15 @@ const Categories = () => {
                   </button>
                 </td>
               </tr>
-            ))
-
-              : <span className="cat_not_found">Categories not found</span>}
+            ))}
           </tbody>
         </table>
       ) : (
-        <p className="error">{error}</p>
+        <div className="info">Categories not found.</div>
       )}
+      <>
+        {loading && <span>Loading All Categories...</span>}
+      </>
     </>
   );
   return (
@@ -157,7 +179,7 @@ const Categories = () => {
       <div className="category_container">
         <div className="category_left_container">
           <h2>{editCategory ? "Edit Category" : "Add Category"}</h2>
-          <form className="category_form" onSubmit={editCategory ? edit_category : handleSubmit}>
+          <form className="category_form" onSubmit={handleSubmit}>
             <div className="input_container">
               <input
                 type="text"
@@ -176,23 +198,25 @@ const Categories = () => {
                 onChange={(e) => setCategoryDescription(e.target.value)}
               />
             </div>
-            {editCategory ?
+            {editCategory ? (
               <div className="edit_buttons">
                 <button className="edit" type="submit">
-                  {loading ? "Updating..." : "Edit Category"}
+                  {loading ? "Updating..." : "Save"}
                 </button>
-                <button className="cancel" onClick={() => ""}>Cancel</button>
+                <button className="cancel" onClick={(e) => cancelEdit(e)}>
+                  Cancel
+                </button>
               </div>
-              :
+            ) : (
               <button className="add" type="submit">
                 {loading ? "Adding..." : "Add Category"}
               </button>
-            }
+            )}
 
-            <span>
-              {error && <div className="error">{error}</div>}
-              {info && <div className="info">{info}</div>}
-            </span>
+            <div>
+              {errorMsg && <p className="error">{errorMsg}</p>}
+              {info && <p className="info">{info}</p>}
+            </div>
           </form>
         </div>
         <div className="category_right_container">{categoryElement()}</div>
