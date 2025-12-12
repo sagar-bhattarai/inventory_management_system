@@ -6,12 +6,13 @@ import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Categories from "./components/Categories.jsx";
 import Logout from "./pages/logout.jsx";
+import Suppliers from "./components/Suppliers.jsx";
 
 function App() {
   const sidebarItems = [
     { name: "categories", element: <Categories /> },
     { name: "products", element: <Categories /> },
-    { name: "suppliers", element: <Categories /> },
+    { name: "suppliers", element: <Suppliers /> },
     { name: "orders", element: <Categories /> },
     { name: "users", element: <Categories /> },
     { name: "profile", element: <Categories /> },

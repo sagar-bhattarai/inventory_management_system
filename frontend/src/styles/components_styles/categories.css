@@ -1,9 +1,7 @@
 .category {
     @apply flex flex-col bg-gray-100;
 
-    h1 {
-        @apply text-lg font-bold;
-    }
+    h1 {}
 
     .category_container {
         @apply flex justify-between gap-3;
@@ -19,48 +17,34 @@
                 .input_container {
                     @apply pb-2;
 
-                    label {
-                        @apply text-sm font-bold;
-                    }
-
                     input,
                     textarea {
-                        @apply rounded border py-[5px] px-3 text-sm w-full;
-                    }
-
-                    textarea {
-                        @apply min-h-[80px];
+                        @apply px-3 text-sm w-full;
                     }
                 }
 
                 button {
-                    @apply rounded border py-[2px] px-3 w-full cursor-pointer duration-300 shadow-lg;
-
-                    &.add {
-                        @apply flex justify-center items-center gap-2 border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
+                    &.add_button {
+                        @apply flex justify-center items-center gap-2 w-full;
                     }
                 }
 
                 .edit_buttons {
                     @apply flex justify-between gap-2;
 
-                    .cancel {
-                        @apply border-red-400 bg-red-400 hover:bg-red-600 shadow-red-400/50;
-                    }
-
-                    .edit {
-                        @apply border-yellow-300 bg-yellow-300 hover:bg-yellow-500 shadow-yellow-300/50;
+                    button {
+                        @apply w-full;
                     }
                 }
             }
         }
 
         .category_right_container {
-            @apply flex flex-col rounded grow  mt-3;
+            @apply flex flex-col rounded grow mt-3;
 
             .search_category {
                 input {
-                    @apply rounded mb-5 py-[5px] px-3 text-sm w-full bg-white shadow-lg;
+                    @apply px-3 text-sm w-full bg-white shadow-lg;
                 }
             }
 
@@ -86,14 +70,17 @@
                                 @apply flex flex-row gap-2;
 
                                 button {
-                                    @apply flex flex-col justify-end items-center cursor-pointer;
+                                    @apply flex flex-col justify-end items-center cursor-pointer border-none;
 
                                     &.edit {
-                                        @apply hover:text-yellow-600;
+                                        @apply hover:text-yellow-600 hover:shadow-yellow-300 hover:shadow-sm;
                                     }
 
                                     &.delete {
-                                        @apply hover:text-red-600;
+                                        @apply hover:text-red-600 hover:shadow-red-300 hover:shadow-sm;
+                                    }
+                                    &.btn_clicked{
+                                        @apply shadow-blue-700 shadow-lg ;
                                     }
 
                                     span {

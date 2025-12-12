@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaRegTrashAlt, FaRegEdit, FaSpinner } from "react-icons/fa";
 // import { FaSpinner, FaCircleNotch } from "react-icons/fa";
+import constant from "../constant.js";
 
 const Categories = () => {
   const [categoryName, setCategoryName] = useState("");
@@ -12,12 +13,8 @@ const Categories = () => {
   const [loading, setLoading] = useState(false);
   const [editCategory, setEditCategory] = useState("");
 
-  const url = `http://localhost:8000/api/v1/categories`;
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("pos-accessToken")}`,
-    },
-  };
+  const url = `${constant.PATH}/categories`;
+console.log('url',url)
 
   const setInformation = (msgType, msg) => {
     if (msgType == "info") {
@@ -36,7 +33,7 @@ const Categories = () => {
     setLoading(true);
     setErrorMsg(false);
     try {
-      const response = await axios.get(`${url}/all`, headers);
+      const response = await axios.get(`${url}/all`, constant.HEADERS);
       if (response) {
         setCategories(response.data.categories);
       }
@@ -66,13 +63,13 @@ const Categories = () => {
         response = await axios.put(
           `${url}/update/${editCategory}`,
           { categoryName, categoryDescription },
-          headers
+          constant.HEADERS
         );
       } else {
         response = await axios.post(
           `${url}/add`,
           { categoryName, categoryDescription },
-          headers
+          constant.HEADERS
         );
       }
       if (response) {
@@ -111,7 +108,7 @@ const Categories = () => {
     if (confirmDelete) {
       setLoading(true);
       try {
-        const response = await axios.delete(`${url}/delete/${id}`, headers);
+        const response = await axios.delete(`${url}/delete/${id}`, constant.HEADERS);
         if (response) {
           fetchAllCategories();
           setCategoryName("");
@@ -201,15 +198,15 @@ const Categories = () => {
             </div>
             {editCategory ? (
               <div className="edit_buttons">
-                <button className="edit" type="submit">
+                <button className="edit_button" type="submit">
                   Save {loading && <FaSpinner className="spin" />}
                 </button>
-                <button className="cancel" onClick={(e) => cancelEdit(e)}>
+                <button className="cancel_button" onClick={(e) => cancelEdit(e)}>
                   Cancel
                 </button>
               </div>
             ) : (
-              <button className="add" type="submit">
+              <button className="add_button" type="submit">
                 Add Category
                 {loading && <FaSpinner className="spin" />}
               </button>

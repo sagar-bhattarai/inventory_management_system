@@ -9,31 +9,8 @@
 */
 
 /* Import your SCSS files after Tailwind directives */
+@import "./common.css";
 @import "./pages_styles/login.css";
 @import "./components_styles/categories.css";
+@import "./components_styles/suppliers.css";
 
-
-.error {
-    @apply bg-red-500 text-gray-50 py-2 px-4 my-4 rounded text-center;
-}
-
-.success {
-    @apply bg-green-500 text-gray-50 py-2 px-4 my-4 rounded text-center;
-}
-
-.info {
-    @apply bg-orange-500 text-orange-50 py-2 px-4 my-4 rounded text-center;
-}
-
-
-@layer utilities {
-  .spin {
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-}
