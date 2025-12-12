@@ -9,44 +9,63 @@
         @apply flex justify-between gap-3;
 
         .category_left_container {
-            @apply flex flex-col bg-white rounded p-3 mt-3 shadow-lg h-min;
+            @apply flex flex-col bg-white rounded p-3 mt-3 shadow-lg h-min min-w-1/5 max-w-1/5;
 
             h2 {
-                @apply pb-2 text-sm font-bold text-center;
+                @apply pb-2 text-lg font-bold;
             }
 
             .category_form {
                 .input_container {
                     @apply pb-2;
 
-                    input {
-                        @apply rounded border py-[2px] px-3 text-sm;
+                    label {
+                        @apply text-sm font-bold;
+                    }
+
+                    input,
+                    textarea {
+                        @apply rounded border py-[5px] px-3 text-sm w-full;
+                    }
+
+                    textarea {
+                        @apply min-h-[80px];
                     }
                 }
 
                 button {
-                    @apply rounded border py-[2px] px-3 w-full cursor-pointer  duration-300 shadow-lg ;
-                    &.add{
+                    @apply rounded border py-[2px] px-3 w-full cursor-pointer duration-300 shadow-lg;
+
+                    &.add {
                         @apply flex justify-center items-center gap-2 border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
                     }
                 }
-                .edit_buttons{
+
+                .edit_buttons {
                     @apply flex justify-between gap-2;
-                    .cancel{
-                         @apply border-red-400 bg-red-400 hover:bg-red-600 shadow-red-400/50;
+
+                    .cancel {
+                        @apply border-red-400 bg-red-400 hover:bg-red-600 shadow-red-400/50;
                     }
-                    .edit{
-                         @apply border-yellow-300 bg-yellow-300 hover:bg-yellow-500 shadow-yellow-300/50;
+
+                    .edit {
+                        @apply border-yellow-300 bg-yellow-300 hover:bg-yellow-500 shadow-yellow-300/50;
                     }
                 }
             }
         }
 
         .category_right_container {
-            @apply flex flex-col grow bg-white rounded p-3 mt-3 shadow-lg;
+            @apply flex flex-col rounded grow  mt-3;
+
+            .search_category {
+                input {
+                    @apply rounded mb-5 py-[5px] px-3 text-sm w-full bg-white shadow-lg;
+                }
+            }
 
             table {
-                @apply border-collapse border border-gray-200;
+                @apply border-collapse border border-gray-200 rounded bg-white shadow-lg;
 
                 thead {
                     tr {
@@ -84,13 +103,15 @@
                             }
                         }
                     }
-                    .cat_not_found{
+
+                    .cat_not_found {
                         @apply text-center;
                     }
                 }
             }
-            .categories_loading{
-                 @apply flex justify-center items-center gap-2
+
+            .categories_loading {
+                @apply flex justify-center items-center gap-2;
             }
         }
     }

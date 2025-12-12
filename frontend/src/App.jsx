@@ -5,6 +5,7 @@ import Login from "./pages/login.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Categories from "./components/Categories.jsx";
+import Logout from "./pages/logout.jsx";
 
 function App() {
   const sidebarItems = [
@@ -14,7 +15,7 @@ function App() {
     { name: "orders", element: <Categories /> },
     { name: "users", element: <Categories /> },
     { name: "profile", element: <Categories /> },
-    { name: "logout", element: <Categories /> },
+    { name: "logout", element: <Logout /> },
   ];
 
   return (

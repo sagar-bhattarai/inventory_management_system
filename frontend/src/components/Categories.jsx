@@ -107,25 +107,29 @@ const Categories = () => {
   };
 
   const delete_category = async (id) => {
-    setLoading(true);
-    try {
-      const response = await axios.delete(`${url}/delete/${id}`, headers);
-      if (response) {
-        fetchAllCategories();
-        setCategoryName("");
-        setCategoryDescription("");
-        setEditCategory("");
-        setInformation("info", `${categoryName} ${response.data.message}`);
+    const confirmDelete = window.confirm("Are you sure, you want to delete this category?");
+    if (confirmDelete) {
+      setLoading(true);
+      try {
+        const response = await axios.delete(`${url}/delete/${id}`, headers);
+        if (response) {
+          fetchAllCategories();
+          setCategoryName("");
+          setCategoryDescription("");
+          setEditCategory("");
+          setInformation("info", `${categoryName} ${response.data.message}`);
+        }
+      } catch (error) {
+        if (error.response.data.message) {
+          setInformation("error", error.response.data.message);
+        } else {
+          setInformation("error", error.response.statusText);
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      if (error.response.data.message) {
-        setInformation("error", error.response.data.message);
-      } else {
-        setInformation("error", error.response.statusText);
-      }
-    } finally {
-      setLoading(false);
     }
+
   };
   const categoryElement = () => (
     <>
@@ -173,21 +177,23 @@ const Categories = () => {
 
       <div className="category_container">
         <div className="category_left_container">
-          <h2>{editCategory ? "Edit Category" : "Add Category"}</h2>
+          <h2>{editCategory ? "Edit Category" : "Add New Category"}</h2>
           <form className="category_form" onSubmit={handleSubmit}>
             <div className="input_container">
+              <label>Category Name</label>
               <input
                 type="text"
-                placeholder="Category Name"
+                placeholder="Enter Category Name"
                 required
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
               />
             </div>
             <div className="input_container">
-              <input
+              <label>Category Description</label>
+              <textarea
                 type="text"
-                placeholder="Category Description"
+                placeholder="Category Description (Optional)"
                 required
                 value={categoryDescription}
                 onChange={(e) => setCategoryDescription(e.target.value)}
@@ -196,7 +202,7 @@ const Categories = () => {
             {editCategory ? (
               <div className="edit_buttons">
                 <button className="edit" type="submit">
-                   Save {loading && <FaSpinner className="spin" />}
+                  Save {loading && <FaSpinner className="spin" />}
                 </button>
                 <button className="cancel" onClick={(e) => cancelEdit(e)}>
                   Cancel
@@ -215,7 +221,16 @@ const Categories = () => {
             </div>
           </form>
         </div>
-        <div className="category_right_container">{categoryElement()}</div>
+        <div className="category_right_container">
+          <div className="search_category">
+            <input
+              placeholder="Search Categories.."
+              onChange={""}
+            />
+          </div>
+
+          {categoryElement()}
+        </div>
       </div>
     </div>
   );

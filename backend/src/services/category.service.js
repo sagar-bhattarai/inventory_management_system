@@ -35,7 +35,7 @@ const add = async (req) => {
 const all = async (req) => {
   // const categories = await CategoryModel.find().projection({_id:0, categoryName:1, categoryDescription:1}).limit(5); // throws error
 
-  const categories = await CategoryModel.find({}, { _id: 1, categoryName: 1, categoryDescription: 1 }).limit(5);
+  const categories = await CategoryModel.find({}, { _id: 1, categoryName: 1, categoryDescription: 1 }).limit(10);
   //  const categories = await CategoryModel.find().select("categoryName categoryDescription -_id").limit(5);
 
   if (!categories) {
