@@ -14,7 +14,6 @@ const Categories = () => {
   const [editCategory, setEditCategory] = useState("");
 
   const url = `${constant.PATH}/categories`;
-console.log('url',url)
 
   const setInformation = (msgType, msg) => {
     if (msgType == "info") {

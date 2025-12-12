@@ -30,8 +30,8 @@ const getAllCategories = async (req, res) => {
       .json({ api: config.api, categories, message: "Categories fetched successfully." });
   } catch (error) {
     return (
-      res.status(error.status || 500),
-      json(error.message, "server error while fetching all category.")
+      res.status(error.status || 500)
+      .json({message: error.message || "server error while fetching all category."})
     );
   }
 };
