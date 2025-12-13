@@ -38,7 +38,7 @@ const all = async () => {
 };
 
 const edit = async (req) => {
-    const supplierOnDb = await findSupplierOnDb(req.body.id, "id");
+    const supplierOnDb = await findSupplierOnDb(req.params.id, "id");
 
     if (!supplierOnDb) {
         throw {
@@ -46,9 +46,6 @@ const edit = async (req) => {
             message: "supplier does not exist",
         };
     }
-
-    console.log("supplierOnDb", supplierOnDb);
-    console.log("req.body", req.body);
 
     const updateThis = {
         name: req.body.name || supplierOnDb.name,
@@ -58,7 +55,7 @@ const edit = async (req) => {
     };
 
     const edited = await SupplierModel.findByIdAndUpdate(
-        req.param.id,
+        req.params.id,
         { updateThis },
         { new: true }
     );
@@ -66,7 +63,7 @@ const edit = async (req) => {
     if (!edited) {
         throw {
             status: 400,
-            message: "could not delete supplier",
+            message: "could not update supplier",
         };
     }
 

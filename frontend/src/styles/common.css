@@ -1,56 +1,97 @@
 .error {
-    @apply bg-red-500 text-gray-50 py-2 px-4 rounded text-center;
+  @apply bg-red-500 text-gray-50 py-2 px-4 rounded text-center;
 }
 
 .success {
-    @apply bg-green-500 text-gray-50 py-2 px-4 rounded text-center;
+  @apply bg-green-500 text-gray-50 py-2 px-4 rounded text-center;
 }
 
 .info {
-    @apply bg-orange-500 text-orange-50 py-2 px-4 rounded text-center;
+  @apply bg-orange-500 text-orange-50 py-2 px-4 rounded text-center;
 }
 
 h1 {
-    @apply text-lg font-bold;
+  @apply text-lg font-bold;
 }
 
 label {
-    @apply text-sm font-bold;
+  @apply text-sm font-bold;
 }
 
 input,
 textarea {
-    @apply rounded border py-[5px];
+  @apply rounded border py-[5px];
 }
 
 textarea {
-    @apply min-h-[80px];
+  @apply min-h-[80px];
 }
 
 button {
-    @apply rounded border py-[2px] px-3 hover:text-white cursor-pointer duration-300 shadow-md;
+  @apply rounded border py-[2px] px-3 hover:text-white cursor-pointer duration-300 shadow-md;
 }
 
 .add_button {
-    @apply hover:text-white border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
+  @apply hover:text-white border-green-300 bg-green-300 hover:bg-green-500 shadow-green-300/50;
 }
 
 .cancel_button {
-    @apply border-red-400 bg-red-400 hover:text-white hover:bg-red-600 shadow-red-400/50;
+  @apply border-red-400 bg-red-400 hover:text-white hover:bg-red-600 shadow-red-400/50;
 }
 
 .edit_button {
-    @apply border-yellow-300 bg-yellow-300 hover:text-white hover:bg-yellow-500 shadow-yellow-300/50;
+  @apply border-yellow-300 bg-yellow-300 hover:text-white hover:bg-yellow-500 shadow-yellow-300/50;
+}
+
+table {
+  @apply border-collapse border border-gray-200 rounded bg-white shadow-lg;
+
+  thead {
+    tr {
+      @apply bg-gray-100;
+
+      td {
+        @apply border border-gray-200 p-2;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        @apply border border-gray-200 p-2;
+
+        &.td_actions {
+          @apply flex flex-row gap-2;
+
+          button {
+            @apply flex flex-col justify-end items-center cursor-pointer border-none;
+
+            &.edit {
+              @apply hover:text-yellow-600 hover:shadow-yellow-300 hover:shadow-sm;
+            }
+
+            &.delete {
+              @apply hover:text-red-600 hover:shadow-red-300 hover:shadow-sm;
+            }
+            span {
+              @apply text-[8px];
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @layer utilities {
-    .spin {
-        animation: spin 1s linear infinite;
-    }
+  .spin {
+    animation: spin 1s linear infinite;
+  }
 
-    @keyframes spin {
-        100% {
-            transform: rotate(360deg);
-        }
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
     }
+  }
 }

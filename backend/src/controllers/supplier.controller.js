@@ -17,8 +17,8 @@ const addSupplier = async (req, res) => {
             return res.status(400).json({ message: "Supplier name must be unique" });
         }
         return res
-            .status(error.status || 500)
-            .json({ message: error.message || "server error while adding supplier." });
+            .status(500)
+            .json({ message: "server error while adding supplier." });
     }
 };
 
@@ -37,8 +37,8 @@ const getAllSuppliers = async (req, res) => {
             );
     } catch (error) {
         return res
-            .status(error.status || 500)
-            .json({ message: error.message || "server error while fetching all supplier." });
+            .status(500)
+            .json({ message: "server error while fetching all supplier." });
     }
 }
 
@@ -47,17 +47,17 @@ const updateSupplier = async (req, res) => {
         const edited = await supplierService.edit(req);
         return res
             .status(200)
-            .json({ api: config.api, edited, message: "supplier updating successfully." });
+            .json({ api: config.api, edited, message: "supplier updated successfully." });
     } catch (error) {
         return res
-            .status(error.status || 500)
-            .json({ message: error.message || "error while updating supplier." });
+            .status(500)
+            .json({ message: "error while updating supplier." });
     }
 }
 
 const deleteSupplier = async (req, res) => {
     try {
-        await supplierService.remove(req.param.id);
+        await supplierService.remove(req.params.id);
 
         return res
             .status(200)
@@ -65,8 +65,8 @@ const deleteSupplier = async (req, res) => {
 
     } catch (error) {
         return res
-            .status(error.status || 500)
-            .json({ message: error.message || "error while deleting supplier." });
+            .status(500)
+            .json({ message: "error while deleting supplier." });
     }
 }
 export { addSupplier, getAllSuppliers, deleteSupplier, updateSupplier }

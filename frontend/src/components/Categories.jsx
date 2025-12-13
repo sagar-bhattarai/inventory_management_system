@@ -110,10 +110,7 @@ const Categories = () => {
         const response = await axios.delete(`${url}/delete/${id}`, constant.HEADERS);
         if (response) {
           fetchAllCategories();
-          setCategoryName("");
-          setCategoryDescription("");
-          setEditCategory("");
-          setInformation("info", `${categoryName} ${response.data.message}`);
+          setInformation("info", response.data.message);
         }
       } catch (error) {
         if (error.response.data.message) {
@@ -129,42 +126,47 @@ const Categories = () => {
   };
   const categoryElement = () => (
     <>
-      {categories && categories.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <td>S.N</td>
-              <td>Category Name</td>
-              <td>Actions</td>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((category, index) => (
-              <tr key={category._id}>
-                <td>{index + 1}</td>
-                <td>{category.categoryName}</td>
-                <td className="td_actions">
-                  <button
-                    onClick={() => edit_category(category)}
-                    className="edit"
-                  >
-                    <FaRegEdit /> <span>Edit</span>
-                  </button>
-                  <button
-                    onClick={() => delete_category(category._id)}
-                    className="delete"
-                  >
-                    {loading ? <FaSpinner className="spin" /> : <> <FaRegTrashAlt /> <span>Delete</span></>}
-                  </button>
-                </td>
+
+      {loading
+        ?
+        <span className="categories_loading"> {loading && <FaSpinner className="spin" />} Loading All Categories...</span>
+        :
+        (categories && categories.length > 0) ? (
+          <table>
+            <thead>
+              <tr>
+                <td>S.N</td>
+                <td>Category Name</td>
+                <td>Actions</td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div className="info">Categories not found.</div>
-      )}
-      <>{loading && <span className="categories_loading"> {loading && <FaSpinner className="spin" />} Loading All Categories...</span>}</>
+            </thead>
+            <tbody>
+              {categories.map((category, index) => (
+                <tr key={category._id}>
+                  <td>{index + 1}</td>
+                  <td>{category.categoryName}</td>
+                  <td className="td_actions">
+                    <button
+                      onClick={() => edit_category(category)}
+                      className="edit"
+                    >
+                      <FaRegEdit /> <span>Edit</span>
+                    </button>
+                    <button
+                      onClick={() => delete_category(category._id)}
+                      className="delete"
+                    >
+                      {loading ? <FaSpinner className="spin" /> : <> <FaRegTrashAlt /> <span>Delete</span></>}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="info">Categories not found.</div>
+        )
+      }
     </>
   );
   return (

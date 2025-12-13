@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/add", authMiddleWare, addSupplier);
 router.get("/all", getAllSuppliers);
-router.delete("/delete/:id", authMiddleWare, deleteSupplier);
 router.put("/update/:id", authMiddleWare, updateSupplier);
+router.delete("/delete/:id", authMiddleWare, deleteSupplier);
 
 export default router;

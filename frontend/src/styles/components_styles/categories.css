@@ -48,49 +48,8 @@
                 }
             }
 
-            table {
-                @apply border-collapse border border-gray-200 rounded bg-white shadow-lg;
-
-                thead {
-                    tr {
-                        @apply bg-gray-100;
-
-                        td {
-                            @apply border border-gray-200 p-2;
-                        }
-                    }
-                }
-
+            .table {
                 tbody {
-                    tr {
-                        td {
-                            @apply border border-gray-200 p-2;
-
-                            &.td_actions {
-                                @apply flex flex-row gap-2;
-
-                                button {
-                                    @apply flex flex-col justify-end items-center cursor-pointer border-none;
-
-                                    &.edit {
-                                        @apply hover:text-yellow-600 hover:shadow-yellow-300 hover:shadow-sm;
-                                    }
-
-                                    &.delete {
-                                        @apply hover:text-red-600 hover:shadow-red-300 hover:shadow-sm;
-                                    }
-                                    &.btn_clicked{
-                                        @apply shadow-blue-700 shadow-lg ;
-                                    }
-
-                                    span {
-                                        @apply text-[8px];
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     .cat_not_found {
                         @apply text-center;
                     }
